@@ -6,6 +6,7 @@ builder.Services.AddSingleton<ScoreRepository>();
 
 var app = builder.Build();
 
+//test
 await using (var scope = app.Services.CreateAsyncScope())
 {
     var repository = scope.ServiceProvider.GetRequiredService<ScoreRepository>();
