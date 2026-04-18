@@ -5,7 +5,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddSingleton<ScoreRepository>();
 
 var app = builder.Build();
-
+//test change
 await using (var scope = app.Services.CreateAsyncScope())
 {
     var repository = scope.ServiceProvider.GetRequiredService<ScoreRepository>();
