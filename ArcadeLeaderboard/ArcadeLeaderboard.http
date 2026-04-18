@@ -1,0 +1,6 @@
+@ArcadeLeaderboard_HostAddress = http://localhost:5107
+
+GET {{ArcadeLeaderboard_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
