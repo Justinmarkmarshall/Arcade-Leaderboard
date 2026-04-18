@@ -1,0 +1,34 @@
+services:
+  api:
+    build:
+      context: ./ArcadeLeaderboard
+      dockerfile: Dockerfile
+    container_name: arcade-leaderboard-api
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ConnectionStrings__LeaderboardDb: Host=db;Port=5432;Database=arcade_leaderboard;Username=postgres;Password=postgres
+    ports:
+      - "${API_PORT:-8081}:8080"
+
+  db:
+    image: postgres:16
+    container_name: arcade-leaderboard-db
+    environment:
+      POSTGRES_DB: arcade_leaderboard
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "${POSTGRES_PORT:-5433}:5432"
+    volumes:
+      - leaderboard-postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d arcade_leaderboard"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  leaderboard-postgres-data:
